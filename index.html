@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Braskem | Regularização Imobiliária</title>
-<!-- Biblioteca SheetJS embutida por CDN oficial com fallback -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
@@ -108,7 +107,8 @@ button:hover, .botao-arquivo:hover {
 
 #arquivo { display: none; }
 
-/* EQUAÇÃO SUPERIOR RESPONSIVA */
+/* EQUAÇÃO SUPERIOR CORRIGIDA */
+
 .equacao {
     display: flex;
     flex-wrap: wrap;
@@ -188,6 +188,7 @@ button:hover, .botao-arquivo:hover {
 }
 
 /* CARTÕES DE CLASSIFICAÇÃO */
+
 .classificacoes {
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -269,6 +270,7 @@ button:hover, .botao-arquivo:hover {
 }
 
 /* DETALHAMENTO */
+
 .painel {
     margin-top: 28px;
     padding: 20px;
@@ -334,8 +336,13 @@ button:hover, .botao-arquivo:hover {
 }
 
 @media (max-width: 1100px) {
-    .equacao { justify-content: center; }
-    .indicador { min-width: 130px; flex: 1 1 22%; }
+    .equacao {
+        justify-content: center;
+    }
+    .indicador {
+        min-width: 130px;
+        flex: 1 1 22%;
+    }
 }
 
 @media (max-width: 850px) {
@@ -343,32 +350,157 @@ button:hover, .botao-arquivo:hover {
     .logo img { width: 125px; }
     .titulo { font-size: 16px; }
     main { padding: 14px; }
-    .equacao { gap: 6px; }
-    .indicador { min-width: 45%; flex: 1 1 45%; }
-    .classificacoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .resumo { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .equacao {
+        gap: 6px;
+    }
+
+    .indicador {
+        min-width: 45%;
+        flex: 1 1 45%;
+    }
+
+    .classificacoes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .resumo {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 480px) {
-    header { align-items: flex-start; flex-direction: column; }
+    header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
     .titulo { text-align: left; }
-    .indicador { min-width: 100%; flex: 1 1 100%; }
-    .classificacoes, .resumo { grid-template-columns: 1fr; }
+
+    .indicador {
+        min-width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .classificacoes, .resumo {
+        grid-template-columns: 1fr;
+    }
+
     .cartao { min-height: 275px; }
+
     .indicador .numero { font-size: 23px; }
 }
 
 @media print {
-    .acoes { display: none; }
-    body { background: white; }
-    main { max-width: none; padding: 8px; }
-    .equacao { flex-wrap: nowrap; gap: 3px; }
-    .operador { display: flex; font-size: 14px; }
-    .classificacoes { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; }
-    .cartao, .indicador, .painel { box-shadow: none; break-inside: avoid; }
-    .cartao { padding: 4px; }
-    .linha { font-size: 9px; }
-    .linha strong { font-size: 12px; }
+    @media print {
+    /* Oculta botões de ação */
+    .acoes { display: none !important; }
+
+    /* Ajuste geral de margens da página */
+    body {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    main {
+        max-width: 100% !important;
+        padding: 10px !important;
+    }
+
+    /* EQUAÇÃO SUPERIOR: Organizada em grade limpa para folha A4 */
+    .equacao {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 8px !important;
+        margin-bottom: 20px !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Esconde os sinais matemáticos (-) e (=) para economizar espaço e evitar desalinhamento no papel */
+    .operador {
+        display: none !important;
+    }
+
+    .indicador {
+        min-width: 0 !important;
+        min-height: auto !important;
+        padding: 8px 4px !important;
+        box-shadow: none !important;
+        border: 1px solid #d0d7de !important;
+        border-top: 4px solid var(--azul) !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .indicador.final {
+        border-top-color: var(--verde) !important;
+    }
+
+    .indicador .rotulo {
+        font-size: 10px !important;
+        min-height: auto !important;
+    }
+
+    .indicador .numero {
+        font-size: 18px !important;
+        margin-top: 4px !important;
+    }
+
+    /* CLASSIFICAÇÃO DOS IMÓVEIS: 5 colunas no papel */
+    .classificacoes {
+        display: grid !important;
+        grid-template-columns: repeat(5, 1fr) !important;
+        gap: 6px !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .cartao {
+        box-shadow: none !important;
+        min-height: auto !important;
+        padding: 4px !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .cartao-titulo {
+        font-size: 11px !important;
+        padding: 4px 2px !important;
+        min-height: auto !important;
+    }
+
+    .linha {
+        padding: 4px 0 !important;
+        font-size: 9px !important;
+    }
+
+    .linha strong {
+        font-size: 11px !important;
+    }
+
+    .icone {
+        display: none !important; /* Esconde ícones grandes no PDF */
+    }
+
+    /* DISTRIBUIÇÃO COMPLEMENTAR */
+    .painel {
+        box-shadow: none !important;
+        padding: 10px 0 !important;
+        margin-top: 15px !important;
+    }
+
+    .resumo {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .resumo-card {
+        padding: 8px !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
 }
 </style>
 </head>
@@ -471,6 +603,7 @@ button:hover, .botao-arquivo:hover {
         </div>
 
         <div class="classificacoes">
+
             <article class="cartao regular">
                 <div class="cartao-titulo">Regular</div>
                 <div class="cartao-conteudo">
@@ -570,6 +703,7 @@ button:hover, .botao-arquivo:hover {
                 <div class="icone">✓</div>
                 <div class="cartao-rodape">Imóveis já regularizados</div>
             </article>
+
         </div>
     </section>
 
@@ -587,6 +721,7 @@ button:hover, .botao-arquivo:hover {
 
 <script>
 const $ = id => document.getElementById(id);
+
 const fmt = n => Number(n || 0).toLocaleString("pt-BR");
 
 function normalizar(v) {
@@ -613,26 +748,37 @@ function definir(id, valor) {
 
 function dividirValores(valor) {
     if (!valido(valor)) return [];
-    return String(valor).split(/[;,|\n]+/).map(v => v.trim()).filter(valido);
+
+    return String(valor)
+        .split(/[;,|\n]+/)
+        .map(v => v.trim())
+        .filter(valido);
 }
 
 function valoresDistintos(registros, propriedade) {
     const conjunto = new Set();
+
     registros.forEach(r => {
         r[propriedade].forEach(v => conjunto.add(normalizar(v)));
     });
+
     return conjunto.size;
 }
 
 function atualizarCartao(prefixo, registros) {
     definir(prefixo + "Selos", fmt(registros.length));
-    definir(prefixo + "Matriculas", fmt(valoresDistintos(registros, "matriculas")));
-    definir(prefixo + "BCI", fmt(valoresDistintos(registros, "bcis")));
+    definir(prefixo + "Matriculas", fmt(
+        valoresDistintos(registros, "matriculas")
+    ));
+    definir(prefixo + "BCI", fmt(
+        valoresDistintos(registros, "bcis")
+    ));
 }
 
 function desenharResumo(itens) {
     const container = $("resumo");
     container.innerHTML = "";
+
     const total = [...itens.values()].reduce((a, b) => a + b, 0);
 
     [...itens.entries()]
@@ -654,7 +800,9 @@ function desenharResumo(itens) {
 
             const barra = document.createElement("div");
             barra.className = "barra";
-            barra.style.width = Math.min(total ? quantidade / total * 100 : 0, 100) + "%";
+            barra.style.width = Math.min(
+                total ? quantidade / total * 100 : 0, 100
+            ) + "%";
 
             trilho.appendChild(barra);
             card.append(titulo, valor, trilho);
@@ -664,7 +812,8 @@ function desenharResumo(itens) {
 
 function processarPlanilha(arquivo) {
     if (typeof XLSX === "undefined") {
-        definir("status", "Erro crítico: A biblioteca Excel (SheetJS) não foi carregada. Verifique se o Teams está bloqueando scripts externos.");
+        definir("status",
+            "A biblioteca Excel não carregou. Verifique a conexão com a internet.");
         return;
     }
 
@@ -674,18 +823,26 @@ function processarPlanilha(arquivo) {
 
     leitor.onload = evento => {
         try {
-            const workbook = XLSX.read(new Uint8Array(evento.target.result), { type: "array" });
+            const workbook = XLSX.read(
+                new Uint8Array(evento.target.result),
+                { type: "array" }
+            );
+
             const nomeAba = "Base Consolidada";
             const sheet = workbook.Sheets[nomeAba];
 
             if (!sheet) {
-                throw new Error('A aba "' + nomeAba + '" não foi encontrada na planilha.');
+                throw new Error('A aba "' + nomeAba + '" não foi encontrada.');
             }
 
-            const matriz = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: "", raw: false });
+            const matriz = XLSX.utils.sheet_to_json(sheet, {
+                header: 1,
+                defval: "",
+                raw: false
+            });
 
             if (matriz.length < 2) {
-                throw new Error("A planilha não possui registros suficientes.");
+                throw new Error("A planilha não possui registros.");
             }
 
             const cab = matriz[0].map(v => String(v ?? "").trim());
@@ -697,13 +854,20 @@ function processarPlanilha(arquivo) {
             const cBCI = localizarColuna(cab, "BCI");
 
             const cMatriculas = cab
-                .map((nome, indice) => ({ nome: normalizar(nome), indice }))
-                .filter(x => /^n° matricula ou transcricao \d+$/.test(x.nome))
+                .map((nome, indice) => ({
+                    nome: normalizar(nome),
+                    indice
+                }))
+                .filter(x =>
+                    /^n° matricula ou transcricao \d+$/.test(x.nome)
+                )
                 .map(x => x.indice);
 
             if ([cSelo, cFinal, cTipo, cComp, cBCI].some(i => i < 0)) {
-                throw new_erro = true;
-                throw new Error("Colunas obrigatórias não encontradas. Verifique se os nomes batem com: SELO, CLASSIFICAÇÃO FINAL, Classificação do Selo, Compensados e BCI.");
+                throw new Error(
+                    "Verifique se existem as colunas SELO, CLASSIFICAÇÃO FINAL, " +
+                    "Classificação do Selo, Compensados e BCI."
+                );
             }
 
             const vistos = new Set();
@@ -711,10 +875,12 @@ function processarPlanilha(arquivo) {
 
             matriz.slice(1).forEach(linha => {
                 const selo = String(linha[cSelo] ?? "").trim();
+
                 if (!selo || vistos.has(selo)) return;
                 vistos.add(selo);
 
                 const matriculas = new Set();
+
                 cMatriculas.forEach(indice => {
                     dividirValores(linha[indice]).forEach(v => {
                         matriculas.add(normalizar(v));
@@ -738,14 +904,24 @@ function processarPlanilha(arquivo) {
             });
 
             const total = registros.length;
-            const contarTipo = tipo => registros.filter(r => r.tipo === tipo).length;
+
+            const contarTipo = tipo =>
+                registros.filter(r => r.tipo === tipo).length;
 
             const braskem = contarTipo("braskem");
             const ge = contarTipo("ge");
             const condominios = contarTipo("condominios");
+
             const pcf = total - braskem - ge - condominios;
-            const expurgos = registros.filter(r => r.compensado === "expurgo").length;
-            const regularizados = registros.filter(r => r.classificacao === "regularizado").length;
+
+            const expurgos = registros.filter(
+                r => r.compensado === "expurgo"
+            ).length;
+
+            const regularizados = registros.filter(
+                r => r.classificacao === "regularizado"
+            ).length;
+
             const aRegularizar = pcf - expurgos - regularizados;
 
             definir("totalSelos", fmt(total));
@@ -757,19 +933,43 @@ function processarPlanilha(arquivo) {
             definir("regularizadosTopo", fmt(regularizados));
             definir("aRegularizar", fmt(aRegularizar));
 
-            const grupos = { regular: [], semi: [], naoRegular: [], naoReg: [], regularizado: [] };
+            const grupos = {
+                regular: [],
+                semi: [],
+                naoRegular: [],
+                naoReg: [],
+                regularizado: []
+            };
+
             const outros = new Map();
 
-            registros.externos = []; // safe helper
             registros.forEach(r => {
                 switch (r.classificacao) {
-                    case "regular": grupos.regular.push(r); break;
-                    case "semirregular": grupos.semi.push(r); break;
-                    case "nao regular": grupos.naoRegular.push(r); break;
-                    case "nao regularizavel": grupos.naoReg.push(r); break;
-                    case "regularizado": grupos.regularizado.push(r); break;
+                    case "regular":
+                        grupos.regular.push(r);
+                        break;
+
+                    case "semirregular":
+                        grupos.semi.push(r);
+                        break;
+
+                    case "nao regular":
+                        grupos.naoRegular.push(r);
+                        break;
+
+                    case "nao regularizavel":
+                        grupos.naoReg.push(r);
+                        break;
+
+                    case "regularizado":
+                        grupos.regularizado.push(r);
+                        break;
+
                     default: {
-                        const nome = r.classificacao ? r.classificacao : "Sem classificação";
+                        const nome = r.classificacao
+                            ? r.classificacao
+                            : "Sem classificação";
+
                         outros.set(nome, (outros.get(nome) || 0) + 1);
                     }
                 }
@@ -782,18 +982,24 @@ function processarPlanilha(arquivo) {
             atualizarCartao("regz", grupos.regularizado);
 
             const resumo = new Map();
+
             function somar(nome, valor) {
                 if (!valido(valor)) return;
                 resumo.set(nome, (resumo.get(nome) || 0) + 1);
             }
 
             registros.forEach(r => {
-                somar("Compensados: " + (r.compensado || "Sem informação"), r.compensado);
+                somar("Compensados: " + (r.compensado || "Sem informação"),
+                    r.compensado);
+
                 somar("Classificação do selo: " + r.tipo, r.tipo);
             });
 
             outros.forEach((quantidade, classificacao) => {
-                resumo.set("Classificação final: " + classificacao, quantidade);
+                resumo.set(
+                    "Classificação final: " + classificacao,
+                    quantidade
+                );
             });
 
             desenharResumo(resumo);
@@ -801,16 +1007,19 @@ function processarPlanilha(arquivo) {
             definir(
                 "status",
                 "Arquivo: " + arquivo.name +
-                " | " + fmt(total) + " selos carregados com sucesso!"
+                " | " + fmt(total) + " selos únicos carregados" +
+                " | " + fmt(registros.filter(r => !r.classificacao).length) +
+                " sem classificação final"
             );
 
         } catch (erro) {
             console.error(erro);
-            definir("status", "Erro ao processar planilha: " + erro.message);
+            definir("status", "Erro na importação: " + erro.message);
         }
     };
 
-    leitor.onerror = () => definir("status", "Falha física na leitura do arquivo pelo navegador.");
+    leitor.onerror = () => definir("status", "Falha ao ler o arquivo.");
+
     leitor.readAsArrayBuffer(arquivo);
 }
 
