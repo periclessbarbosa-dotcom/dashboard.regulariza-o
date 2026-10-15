@@ -800,7 +800,6 @@ function processarPlanilha(arquivo) {
             definir("regularizadosTopo", fmt(regularizados));
             definir("aRegularizar", fmt(aRegularizar));
 
-            // FILTRAGEM DOS CARTÕES: Inclui PCF e PCF+GE, excluindo expurgos, sem distribuições arbitrárias
             const registrosPCFValidos = registros.filter(r => 
                 (r.tipo === "pcf" || r.tipo === "pcf + ge") && r.compensado !== "expurgo"
             );
@@ -816,7 +815,7 @@ function processarPlanilha(arquivo) {
                     case "nao regularizavel": grupos.naoReg.push(r); break;
                     case "regularizado": grupos.regularizado.push(r); break;
                     default: {
-                        const nome = r.classificacao ? r.classificacao : "Sem classificação";
+                        const nome = r.classificacao ? r.classificacao : "Selos PCF sem classificação";
                         outros.set(nome, (outros.get(nome) || 0) + 1);
                     }
                 }
@@ -840,7 +839,7 @@ function processarPlanilha(arquivo) {
             });
 
             outros.forEach((quantidade, classificacao) => {
-                resumo.set("Classificação final: " + classificacao, quantidade);
+                resumo.set(classificacao, quantidade);
             });
 
             desenharResumo(resumo);
