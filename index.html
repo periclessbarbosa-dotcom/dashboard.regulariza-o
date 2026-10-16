@@ -788,7 +788,7 @@ function processarPlanilha(arquivo) {
             const condominios = contarTipo("condominios");
             const pcf = total - braskem - ge - condominios;
             
-            // Selos expurgos restritos ao público PCF (PCF ou PCF + GE) com compensado contendo "expurgo"
+            // CORREÇÃO: Conta apenas expurgos onde a classificação do selo é estritamente "pcf" ou "pcf + ge"
             const expurgos = registros.filter(r => 
                 (r.tipo === "pcf" || r.tipo === "pcf + ge") && r.compensado.includes("expurgo")
             ).length;
