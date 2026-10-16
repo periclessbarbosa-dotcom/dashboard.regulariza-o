@@ -612,7 +612,7 @@ button:hover, .botao-arquivo:hover {
                     </div>
                 </div>
                 <div class="icone">✓</div>
-                <div class="cartao-rodape">Imóveis já regularizados</div>
+                <div class="cartao-rodape">Imóveis já regularizados (PCF)</div>
             </article>
         </div>
     </section>
@@ -788,7 +788,12 @@ function processarPlanilha(arquivo) {
             const condominios = contarTipo("condominios");
             const pcf = total - braskem - ge - condominios;
             const expurgos = registros.filter(r => r.compensado === "expurgo").length;
-            const regularizados = registros.filter(r => r.classificacao === "regularizado").length;
+            
+            // Regularizados do topo considera apenas quem tem classificação PCF/PCF+GE e classificação final regularizado
+            const regularizados = registros.filter(r => 
+                (r.tipo === "pcf" || r.tipo === "pcf + ge") && r.classificacao === "regularizado"
+            ).length;
+
             const aRegularizar = pcf - expurgos - regularizados;
 
             definir("totalSelos", fmt(total));
