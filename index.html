@@ -787,9 +787,12 @@ function processarPlanilha(arquivo) {
             const ge = contarTipo("ge");
             const condominios = contarTipo("condominios");
             const pcf = total - braskem - ge - condominios;
-            const expurgos = registros.filter(r => r.compensado === "expurgo").length;
             
-            // Regularizados do topo considera apenas quem tem classificação PCF/PCF+GE e classificação final regularizado
+            // Selos expurgos restritos ao público PCF (PCF ou PCF + GE) com compensado contendo "expurgo"
+            const expurgos = registros.filter(r => 
+                (r.tipo === "pcf" || r.tipo === "pcf + ge") && r.compensado.includes("expurgo")
+            ).length;
+
             const regularizados = registros.filter(r => 
                 (r.tipo === "pcf" || r.tipo === "pcf + ge") && r.classificacao === "regularizado"
             ).length;
@@ -806,7 +809,7 @@ function processarPlanilha(arquivo) {
             definir("aRegularizar", fmt(aRegularizar));
 
             const registrosPCFValidos = registros.filter(r => 
-                (r.tipo === "pcf" || r.tipo === "pcf + ge") && r.compensado !== "expurgo"
+                (r.tipo === "pcf" || r.tipo === "pcf + ge") && !r.compensado.includes("expurgo")
             );
 
             const grupos = { regular: [], semi: [], naoRegular: [], naoReg: [], regularizado: [] };
